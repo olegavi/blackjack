@@ -1,0 +1,38 @@
+.avatar {
+  display: flex;
+  align-items: flex-end;
+
+  &-computer {
+    display: flex;
+    flex-flow: row-reverse;
+
+    .info {
+      align-items: flex-end;
+      margin-right: 15px;
+      margin-left: 0;
+    }
+  }
+}
+
+.info {
+  font-size: 18px;
+  font-weight: 700;
+  justify-content: flex-end;
+  display: flex;
+  flex-flow: column;
+  margin-left: 15px;
+  text-transform: uppercase;
+
+  span {
+    &:first-child {
+      font-size: 24px;
+      color: #fff;
+    }
+
+    &:last-child {
+      background: -webkit-linear-gradient(#f0da24, #93921d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+}

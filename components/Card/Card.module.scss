@@ -1,0 +1,21 @@
+.card {
+  background-color: #fff;
+  width: 70px;
+  height: 110px;
+  position: relative;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 20px;
+  color: black;
+
+  .suit {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+  }
+  .value {
+    top: 5px;
+    left: 5px;
+    position: absolute;
+  }
+}
