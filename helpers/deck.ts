@@ -1,6 +1,7 @@
-export interface Card {
+export interface CardProps {
   value: string;
   suit: string;
+  weight: number;
 }
 
 const SUITS = ["spades", "diamonds", "clubs", "hearts"];
@@ -21,11 +22,15 @@ const VALUES = [
 ];
 
 export function shuffledDeck() {
-  let deck: Card[] = new Array();
+  let deck: CardProps[] = new Array();
 
-  for (let i = 0; i < SUITS.length; i++) {
-    for (let x = 0; x < VALUES.length; x++) {
-      let card = { value: VALUES[x], suit: SUITS[i] };
+  for (let i = 0; i < VALUES.length; i++) {
+    for (let x = 0; x < SUITS.length; x++) {
+      let weight = parseInt(VALUES[i]);
+      if (VALUES[i] == "J" || VALUES[i] == "Q" || VALUES[i] == "K") weight = 10;
+      if (VALUES[i] == "A") weight = 11;
+      let card = { value: VALUES[i], suit: SUITS[x], weight: weight };
+
       deck.push(card);
     }
   }

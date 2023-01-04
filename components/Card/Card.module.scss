@@ -1,0 +1,23 @@
+.card {
+  border-radius: 6px;
+  padding: 4px;
+  display: flex;
+  flex-flow: column wrap;
+  width: 70px;
+  height: 100px;
+  column-gap: 24px;
+  background-color: #fff;
+  position: absolute;
+  box-shadow: 0 2px 2px rgba($color: #000000, $alpha: 0.5);
+  box-sizing: border-box;
+  animation-name: move;
+  animation-duration: 200ms;
+}
+@keyframes move {
+  from {
+    top: 200px;
+  }
+  to {
+    top: 10px;
+  }
+}
