@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Banner from "../components/Banner";
 import Card from "../components/Card/Card";
 import { CardProps } from "../helpers/deck";
@@ -11,7 +11,7 @@ export interface Participant {
 }
 const PARTICIPANT = { points: 0, hand: [] };
 
-export default function Home() {
+export const Home = () => {
   const [deck, setDeck] = useState<CardProps[]>([]);
   const [player, setPlayer] = useState<Participant>(PARTICIPANT);
   const [house, setHouse] = useState<Participant>(PARTICIPANT);
@@ -24,12 +24,16 @@ export default function Home() {
 
           <div className={`${styles.playerHand} ${styles.houseHand}`}>
             {house.hand.map((card, idx) => (
-              <div></div>
+              <Card key={idx} card={card as CardProps} index={idx} />
             ))}
           </div>
         </div>
 
-        <Banner deck={deck} setGlobalDeck={setDeck} setPlayer={setPlayer} />
+        <Banner
+          deck={deck}
+          setGlobalDeck={setDeck}
+          setParticipants={{ player: setPlayer, house: setHouse }}
+        />
 
         <div className={styles.player}>
           <p className={styles.playerName}>
@@ -38,11 +42,13 @@ export default function Home() {
 
           <div className={styles.playerHand}>
             {player.hand.map((card, idx) => (
-              <Card card={card as CardProps} index={idx} />
+              <Card key={idx} card={card as CardProps} index={idx} />
             ))}
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Home;

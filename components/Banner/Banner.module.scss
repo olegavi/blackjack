@@ -47,7 +47,7 @@
     animation: none;
     border-radius: 6px;
     padding: 4px;
-    display: flex;
+    border: solid 2px #fff;
     flex-flow: column wrap;
     box-shadow: 0 2px 2px rgba($color: #000000, $alpha: 0.5);
     &::before {

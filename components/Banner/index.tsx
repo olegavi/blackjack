@@ -7,11 +7,14 @@ import styles from "./Banner.module.scss";
 interface BannerProps {
   setGlobalDeck: React.Dispatch<CardProps[]>;
   deck: CardProps[];
-  setPlayer: React.Dispatch<any>;
+  setParticipants: {
+    player: React.Dispatch<any>;
+    house: React.Dispatch<any>;
+  };
 }
 
 const Banner = (props: BannerProps) => {
-  const { setGlobalDeck, deck, setPlayer } = props;
+  const { setGlobalDeck, deck, setParticipants } = props;
 
   useEffect(() => {
     setGlobalDeck(shuffledDeck());
@@ -22,19 +25,20 @@ const Banner = (props: BannerProps) => {
     dealHands();
   }
 
-  function dealHands() {
-    setPlayer((current: Participant) => {
+  const dealHands = () => {
+    setParticipants.player((current: Participant) => {
       let cards = deck.splice(0, 2);
+
       const sumPoints = cards.reduce((accumulator, object) => {
         return accumulator + object.weight;
       }, 0);
 
       return { ...current, hand: cards, points: sumPoints };
     });
-  }
+  };
 
   function hitMe() {
-    setPlayer((current: Participant) => {
+    setParticipants.player((current: Participant) => {
       let card = deck.pop();
       let caclPoints =
         current.points && card?.weight && current.points + card.weight;
@@ -72,4 +76,4 @@ const Banner = (props: BannerProps) => {
   );
 };
 
-export default Banner;
+export default React.memo(Banner);

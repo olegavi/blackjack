@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { CardProps } from "../../helpers/deck";
 
 import styles from "./Card.module.scss";
@@ -28,10 +28,17 @@ const Card = (props: MyCardProps) => {
         top: "initial",
       }}
     >
-      <span>{suitsType(card as CardProps)}</span>
-      <span>{card.value}</span>
+      <div className={styles.cardHead}>
+        <span>{suitsType(card as CardProps)}</span>
+        <span>{card.value}</span>
+      </div>
+      <div className={styles.cardBody}>{suitsType(card as CardProps)}</div>
+      <div className={styles.cardFooter}>
+        <span>{suitsType(card as CardProps)}</span>
+        <span>{card.value}</span>
+      </div>
     </div>
   );
 };
 
-export default Card;
+export default memo(Card);

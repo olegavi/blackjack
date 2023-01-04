@@ -12,6 +12,32 @@
   box-sizing: border-box;
   animation-name: move;
   animation-duration: 200ms;
+  justify-content: space-between;
+  font-size: 14px;
+  .cardHead {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    flex-flow: column wrap;
+    line-height: 1;
+
+  }
+  .cardBody{
+    font-size: 35px;
+    line-height: 1;
+    width: 100%;
+    text-align: center;
+  }
+  .cardFooter {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    display: flex;
+    flex-flow: column wrap;
+    line-height: 1;
+    transform: rotate(180deg);
+
+  }
 }
 @keyframes move {
   from {
