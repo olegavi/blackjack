@@ -8,7 +8,7 @@
   column-gap: 24px;
   background-color: #fff;
   position: absolute;
-  box-shadow: 0 2px 2px rgba($color: #000000, $alpha: 0.5);
+  box-shadow: 0 1px 1px rgba($color: #000000, $alpha: 0.5);
   box-sizing: border-box;
   animation-name: move;
   animation-duration: 200ms;
@@ -20,9 +20,8 @@
     width: 100%;
     flex-flow: column wrap;
     line-height: 1;
-
   }
-  .cardBody{
+  .cardBody {
     font-size: 35px;
     line-height: 1;
     width: 100%;
@@ -36,7 +35,29 @@
     flex-flow: column wrap;
     line-height: 1;
     transform: rotate(180deg);
+  }
+}
 
+.cardBack {
+  background-color: yellow;
+  filter: contrast(7);
+  --mask: linear-gradient(red, #{rgba(#000, 0.45)});
+  font-size: 12px;
+  color: #000;
+  justify-content: flex-end;
+  border: solid 2px #fff;
+
+  &::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: radial-gradient(#000, transparent) 0 0/ 3px 3px space;
+    -webkit-mask: var(--mask);
+    mask: var(--mask);
+    content: "";
+    z-index: -1;
   }
 }
 @keyframes move {

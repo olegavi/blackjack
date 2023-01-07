@@ -1,74 +1,98 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { checkWinner } from "../../helpers/checkWinner";
+import { dealCard } from "../../helpers/dealCard";
 import { CardProps, shuffledDeck } from "../../helpers/deck";
-import { Participant } from "../../pages";
+import { PARTICIPANT, Participant } from "../../pages";
+import Card from "../../components/Card";
 
 import styles from "./Banner.module.scss";
+import { hitParticipant } from "../../helpers/hitParticipant";
 
-interface BannerProps {
-  setGlobalDeck: React.Dispatch<CardProps[]>;
-  deck: CardProps[];
-  setParticipants: {
-    player: React.Dispatch<any>;
-    house: React.Dispatch<any>;
-  };
+export interface ParticipantsProps {
+  player: Participant;
+  house: Participant;
+}
+
+export interface SetParticipantsProps {
+  player?: React.Dispatch<any>;
+  house?: React.Dispatch<any>;
+}
+
+export interface BannerProps {
+  participants: ParticipantsProps;
+  setParticipants: SetParticipantsProps;
 }
 
 const Banner = (props: BannerProps) => {
-  const { setGlobalDeck, deck, setParticipants } = props;
-
-  useEffect(() => {
-    setGlobalDeck(shuffledDeck());
-  }, []);
+  const { setParticipants, participants } = props;
+  const [deck, setDeck] = useState<CardProps[]>(shuffledDeck());
 
   function newGame() {
-    setGlobalDeck(shuffledDeck());
-    dealHands();
+    setParticipants.player?.(PARTICIPANT);
+    setParticipants.house?.(PARTICIPANT);
+    setDeck(shuffledDeck());
   }
 
   const dealHands = () => {
-    setParticipants.player((current: Participant) => {
-      let cards = deck.splice(0, 2);
-
-      const sumPoints = cards.reduce((accumulator, object) => {
-        return accumulator + object.weight;
-      }, 0);
-
-      return { ...current, hand: cards, points: sumPoints };
+    dealCard({
+      participantsState: setParticipants.house,
+      name: "House",
+      deck: deck,
+    });
+    dealCard({
+      participantsState: setParticipants.player,
+      name: "Player",
+      deck: deck,
     });
   };
 
-  function hitMe() {
-    setParticipants.player((current: Participant) => {
-      let card = deck.pop();
-      let caclPoints =
-        current.points && card?.weight && current.points + card.weight;
-
-      return {
-        ...current,
-        hand: [...current.hand, card],
-        points: caclPoints,
-      };
-    });
-  }
+  useEffect(() => {
+    checkWinner(participants);
+  }, [participants]);
 
   return (
     <div className={styles.banner}>
       <div className={styles.buttons}>
-        <div className={styles.cardBack}>Deck: {deck.length}</div>
+        <Card
+          isFaceDown
+          children={<div className={styles.cardBack}>Deck: {deck.length}</div>}
+          style={{ animation: "none", position: "relative" }}
+        />
 
-        {deck.length < 52 ? (
-          <button className={styles.button} onClick={newGame}>
-            NEW GAME
-          </button>
-        ) : (
+        {deck.length === 52 ? (
           <button className={styles.button} onClick={dealHands}>
             START
           </button>
-        )}
-        {deck.length < 52 && (
-          <button className={styles.button} onClick={hitMe}>
-            HIT ME
-          </button>
+        ) : (
+          <>
+            <button className={styles.button} onClick={newGame}>
+              NEW GAME
+            </button>
+            <button
+              className={styles.button}
+              onClick={() =>
+                hitParticipant({
+                  setParticipants: { player: setParticipants.player },
+                  participants: participants,
+                  deck,
+                })
+              }
+            >
+              HIT ME
+            </button>
+            <button
+              className={styles.button}
+              onClick={() =>
+                hitParticipant({
+                  setParticipants: { house: setParticipants.house },
+                  participants: participants,
+                  deck,
+                })
+              }
+            >
+              STAY
+            </button>
+          </>
         )}
       </div>
       <span className={styles.gameName}>Blackjack</span>
@@ -76,4 +100,4 @@ const Banner = (props: BannerProps) => {
   );
 };
 
-export default React.memo(Banner);
+export default Banner;

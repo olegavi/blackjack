@@ -10,14 +10,8 @@
   );
   width: 100%;
   min-height: 100%;
-  transform: scale(1.5);
 }
-.gameName {
-  background: #e5c72a;
-  color: #000;
-  padding: 0 10px;
-  border-radius: 0 6px 0 6px;
-}
+
 .board {
   width: 100%;
   display: flex;
@@ -25,16 +19,17 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  transform: scale(1.5);
 }
 
-.player {
+.participant {
   display: flex;
   flex-flow: column wrap;
   gap: 15px;
   align-items: center;
   justify-content: center;
 }
-.playerHand {
+.participantHand {
   width: 80px;
   height: 110px;
   border-radius: 6px;
@@ -50,7 +45,7 @@
   }
 }
 
-.playerName {
+.participantName {
   padding: 4px 8px;
   display: flex;
   background-color: #fff;
